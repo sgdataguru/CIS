@@ -30,3 +30,4 @@ Sentinel is a Singapore-focused security wearable ecosystem. It combines a cellu
 Never add real client data, device credentials, SIM details, or cloud secrets to the repository.
 
 See [documentation index](docs/index.md) and [TODO.md](TODO.md).
+# CIS
