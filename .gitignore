@@ -1,0 +1,44 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+coverage.xml
+htmlcov/
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Data, model, and logs
+*.log
+logs/
+data/raw/
+data/processed/
+models/
+artifacts/
+
+# Firmware and embedded builds
+hardware/firmware/build/
+hardware/firmware/.pio/
+*.bin
+*.elf
+*.hex
+
+# OS and editor
+.DS_Store
+~$*.docx
+.vscode/
+.idea/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+!*.tfvars.example

@@ -1,0 +1,60 @@
+@startuml
+!theme plain
+skinparam componentStyle rectangle
+left to right direction
+
+actor Officer
+actor "Control-room operator" as Operator
+actor Supervisor
+cloud "Cellular network\n(SIM only)" as Cellular
+rectangle "Wearable device" as Device {
+  component "GPS & geofence"
+  component "Emergency prompts"
+  component "Basic camera / voice"
+  component "Device identity & OTA agent"
+}
+frame "Azure Singapore" {
+  component "API Management" as APIM
+  component "Sentinel API\n(FastAPI service)" as API
+  component "Device management\nand provisioning" as DeviceMgmt
+  queue "Event Hubs" as Events
+  database "Operational data\nand audit logs" as Data
+  component "Azure AI Search\nApproved site SOPs" as Search
+  component "Azure OpenAI\nGuardrailed RAG" as OpenAI
+  component "Control-room console" as Console
+  component "Key Vault +\nManaged identities" as KV
+  component "Azure Monitor +\nMicrosoft Sentinel" as Monitor
+}
+cloud "Approved SOP sources\nand regulator formats" as SOP
+
+Officer --> Device
+Device --> Cellular : encrypted telemetry, alerts,
+voice requests, GPS
+Cellular --> APIM
+APIM --> API : device and role validation
+API --> Events : auditable events
+Events --> Data
+API --> Search : authorized retrieval
+Search --> OpenAI
+OpenAI --> API : cited guidance / report draft
+API --> Console : alerts and workflows
+Operator --> Console
+Supervisor --> Console : site-level data only
+SOP --> Search : approved ingestion
+DeviceMgmt --> Device : provisioning, OTA status
+KV ..> APIM
+KV ..> API
+Monitor ..> APIM
+Monitor ..> API
+Monitor ..> Events
+note bottom of OpenAI
+Security-domain queries only.
+Human approval is required
+before report submission.
+end note
+note bottom of Data
+Provisional policy:
+audio 30 days;
+transcripts/reports 2 years.
+end note
+@enduml

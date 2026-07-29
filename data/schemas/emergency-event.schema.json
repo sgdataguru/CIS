@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sentinel Emergency Event",
+  "type": "object",
+  "required": ["event_id", "occurred_at", "tenant_id", "site_id", "device_id", "scenario"],
+  "properties": {
+    "event_id": {"type": "string", "format": "uuid"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "tenant_id": {"type": "string"},
+    "site_id": {"type": "string"},
+    "device_id": {"type": "string"},
+    "scenario": {
+      "type": "string",
+      "enum": ["fire", "medical", "intrusion", "duress", "suspicious-person-package"]
+    },
+    "location": {
+      "type": "object",
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": {"type": "number"},
+        "longitude": {"type": "number"},
+        "accuracy_metres": {"type": "number", "minimum": 0}
+      }
+    }
+  },
+  "additionalProperties": false
+}
